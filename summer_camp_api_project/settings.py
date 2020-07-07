@@ -32,7 +32,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '+jz6judp&e@x34h@j9gwnj#4*1@x^^o)q*ux+d_p7(b&v&lyj('
 
 SECRET_KEY = env.str('SECRET_KEY')
 
@@ -95,16 +94,6 @@ WSGI_APPLICATION = 'summer_camp_api_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'kexnphxn',
-#         'USER': 'kexnphxn',
-#         'PASSWORD': 'ZF-1yu1_5_rAxaEkBh3QUFLz6vOihMid',
-#         'HOST': 'otto.db.elephantsql.com',
-#         'PORT':  5432,
-#     }
-# }
 
 DATABASES = {
     'default': {
