@@ -149,16 +149,16 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-# CORS_ORIGIN_WHITELIST = [
-#     "http://localhost:3000",
-#     "https://snacks-next.vercel.app",
-#     "https://ileal-summer-camp-api.herokuapp.com"
-# ]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "https://summer-camp-next.vercel.app",
+    "https://ileal-summer-camp-api.herokuapp.com"
+]
 
 CORS_ORIGIN_REGEX_WHITELIST = [
     r"^http://localhost:3000$",
-    r"^https://ileal-summer-camp-api.herokuapp.com$",
-    r"^https://ileal-summer-camp-next.\w+\.vercel.app$",
+    r"^https://ileal-summer-camp-api.herokuapp.com$",    
+    r"^https://summer-camp-next.\w+\.vercel.app$",
 ]
 
 # production
