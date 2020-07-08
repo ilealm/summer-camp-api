@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    ENVIRONMENT=(str, 'PRODUCTION')
+)
+
+# reading .env file
+environ.Env.read_env()
+
+ENVIRONMENT = env.str('ENVIRONMENT')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +32,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+jz6judp&e@x34h@j9gwnj#4*1@x^^o)q*ux+d_p7(b&v&lyj('
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = env.str('SECRET_KEY')
 
-ALLOWED_HOSTS = []
+DEBUG = env.bool('DEBUG')
+
+ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS'))
 
 
 # Application definition
@@ -47,7 +59,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,19 +94,17 @@ WSGI_APPLICATION = 'summer_camp_api_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kexnphxn',
-        'USER': 'kexnphxn',
-        'PASSWORD': 'ZF-1yu1_5_rAxaEkBh3QUFLz6vOihMid',
-        'HOST': 'otto.db.elephantsql.com',
-        'PORT':  5432,
+        'NAME': env.str('DB_NAME'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD':  env.str('DB_PASSWORD'),
+        'HOST': env.str('DB_HOST'),
+        'PORT':  env.int('DB_PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -130,4 +142,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3000",
+#     "https://snacks-next.vercel.app"
+# ]
+
+# CORS_ORIGIN_REGEX_WHITELIST = [
+#     r"^https://snacks-next.\w+\.vercel.app$",
+# ]
